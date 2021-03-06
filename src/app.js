@@ -36,7 +36,7 @@ const bootstrap = async () => {
         // Routes Setup
         // Testing routes only
         app.get('/', (req, res) => {
-            next.render(req, res, '/home')
+            next.render(req, res, '/')
         })
 
         app.get('*', nextGetHandler)
