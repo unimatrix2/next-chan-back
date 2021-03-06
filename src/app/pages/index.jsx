@@ -29,7 +29,7 @@ export default function Home() {
   	return (
 		  <>
 	  		{ context ? <PersistentDrawer width={context.deviceWindow.width} /> : '' }
-			  <h1>Olha sóp</h1>
+			  <h1>Olha só</h1>
 		  </>
   )
 }
