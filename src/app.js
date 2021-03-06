@@ -29,7 +29,7 @@ const bootstrap = async () => {
         /* app.use(helmet()); */
         app.use(express.urlencoded({ extended: true }));
         app.use(express.json());
-        /* app.use(cors()); */
+        app.use(cors({ origin: process.env.FRONT_END_URL }));
         app.use(mongoSanitize());
 
         // Routes Setup
