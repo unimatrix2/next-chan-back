@@ -4,11 +4,14 @@
   "description": "next-chan backend server & API",
   "main": "app.js",
   "scripts": {
-    "start": "npm-run-all -s deleteBuild build server",
-    "dev": "nodemon --exec babel-node src/app.js",
-    "server": "node build/app.js",
-    "build": "babel src --out-dir build --copy-files",
-    "deleteBuild": "rm -rf build"
+    "dev": "babel-node src/server.js",
+    "clean": "shx rm -rf dist",
+    "prepare-build": "shx mkdir -p dist",
+    "build:app": "next build src/app && npm-run-all --parallel build:app:copy:*",
+    "build:app:copy:static": "shx cp -r src/app/static/* dist/app/static",
+    "build:server": "babel src --out-dir dist",
+    "build": "npm-run-all clean prepare-build && npm-run-all --parallel --print-label build:*",
+    "start": "NODE_ENV=production node dist/server.js"
   },
   "repository": {
     "type": "git",
@@ -21,19 +24,24 @@
   },
   "homepage": "https://github.com/unimatrix2/next-chan-back#readme",
   "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-mongo-sanitize": "^2.0.2",
+    "helmet": "^4.4.1",
+    "mongoose": "^5.11.18",
+    "next": "^10.0.8",
+    "npm": "^7.6.1",
+    "npm-run-all": "^4.1.5",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  },
+  "devDependencies": {
     "@babel/cli": "^7.13.0",
     "@babel/core": "^7.13.8",
     "@babel/node": "^7.13.0",
     "@babel/preset-env": "^7.13.9",
-    "body-parser": "^1.19.0",
-    "cors": "^2.8.5",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "helmet": "^4.4.1",
-    "mongoose": "^5.11.18",
-    "npm-run-all": "^4.1.5"
-  },
-  "devDependencies": {
     "eslint": "^7.21.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
