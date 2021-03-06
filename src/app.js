@@ -26,7 +26,8 @@ const bootstrap = async () => {
         const app = express();
 
         // Middlewares Setup
-        /* app.use(helmet()); */
+        app.use(helmet({ contentSecurityPolicy: false }))
+
         app.use(express.urlencoded({ extended: true }));
         app.use(express.json());
         app.use(cors({ origin: process.env.FRONT_END_URL }));
