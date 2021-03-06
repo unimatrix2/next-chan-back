@@ -2,7 +2,7 @@ import express from 'express';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
 import cors from 'cors'
-import bodyParser from 'body-parser';
+import mongoSanitize from 'express-mongo-sanitize'
 
 // Config DOTENV
 dotenv.config();
@@ -15,8 +15,10 @@ const app = express();
 
 // Middlewares Setup
 app.use(helmet());
-app.use(bodyParser.json());
-app.use(cors({ origin: process.env.FRONT_END_URL }))
+app.use(express.urlencoded());
+app.use(express.json());
+app.use(cors({ origin: process.env.FRONT_END_URL }));
+app.use(mongoSanitize());
 
 // Routes Setup
 
