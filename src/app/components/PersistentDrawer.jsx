@@ -29,9 +29,15 @@ import { mock } from '../mockedData';
 
 export default function PersistentDrawer({ width }) {
     
-	const drawerWidth = width * 15/100;
+    const drawerWidth = width * 15/100;
     const mobileDrawer = drawerWidth < 100 ? width * 16/100 : false;
     const tabletDrawer = drawerWidth < 120 ? width * 21/100 : false;
+
+    const evalDrawerWidth = () => {
+        return mobileDrawer ? mobileDrawer
+        : tabletDrawer ? tabletDrawer
+        : drawerWidth;
+    }
 
     const useStyles = makeStyles((theme) => ({
         root: {
@@ -44,8 +50,8 @@ export default function PersistentDrawer({ width }) {
             }),
         },
         appBarShift: {
-            width: `calc(100% - ${drawerWidth}px)`,
-            marginLeft: drawerWidth,
+            width: `calc(100% - ${evalDrawerWidth(width)}px)`,
+            marginLeft: evalDrawerWidth(width),
             transition: theme.transitions.create(["margin", "width"], {
                 easing: theme.transitions.easing.easeOut,
                 duration: theme.transitions.duration.enteringScreen,
@@ -58,15 +64,11 @@ export default function PersistentDrawer({ width }) {
             display: "none",
         },
         drawer: {
-            width: mobileDrawer ? mobileDrawer
-                : tabletDrawer ? tabletDrawer
-                : drawerWidth,
+            width: evalDrawerWidth(width),
             flexShrink: 0,
         },
         drawerPaper: {
-            width: mobileDrawer ? mobileDrawer
-            : tabletDrawer ? tabletDrawer
-            : drawerWidth,
+            width: evalDrawerWidth(width),
         },
         drawerHeader: {
             display: "flex",
@@ -83,9 +85,7 @@ export default function PersistentDrawer({ width }) {
                 easing: theme.transitions.easing.sharp,
                 duration: theme.transitions.duration.leavingScreen,
             }),
-            marginLeft: mobileDrawer ? -mobileDrawer
-            : tabletDrawer ? -tabletDrawer
-            : -drawerWidth,
+            marginLeft: -evalDrawerWidth(width),
         },
         contentShift: {
             transition: theme.transitions.create("margin", {
