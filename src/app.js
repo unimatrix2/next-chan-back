@@ -36,7 +36,7 @@ const bootstrap = async () => {
         // Routes Setup
         // Testing routes only
         app.get('/', (req, res) => {
-            next.render(req, res, '/')
+            next.render(req, res, '/', { number: 1599 }) // Passing data to the page using query object
         })
 
         app.get('*', nextGetHandler)
