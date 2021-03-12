@@ -5,8 +5,8 @@ const replySchema = new Schema({
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     board: { type: Schema.Types.ObjectId, ref: 'Board', required: true },
     content: { type: String },
-    replying_to_post: { type: Schema.Types.ObjectId, ref: 'Post' },
-    replying_to_reply: { type: Schema.Types.ObjectId, ref: 'Reply' }
+    replying_to: { type: Schema.Types.ObjectId, required: true, refPath: 'on' },
+    on: { type: String, required: true, enum: ['Post', 'Reply'] }
 }, { timestamps: true });
 
-export const Reply = model('Reply', replySchema);
+export const Reply = model('Reply', replySchema); 
