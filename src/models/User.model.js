@@ -11,14 +11,15 @@ const userSchema = new Schema({
         enum: ['anon', 'user', 'modmin', 'admin'],
         default: 'anon',
         required: true
-    }
+    },
+    owned_boards: [{ type: Schema.Types.ObjectId, ref: 'Board' }]
 }, { timestamps: true });
 
 // Joi validation schema
 const userSchemaValidation = {
     nick: joi.string().min(5).max(20).pattern(/[A-Z0-9a-z!@#%^&*_()[\]{}-]+$/).required(),
     password: joi.string().min(8).max(50).required(),
-    role: joi.string().valid('anon', 'user')
+    role: joi.string().valid('anon', 'user', 'modmin', 'admin'),
 }
 
 // Signup Joi Validation trigger
